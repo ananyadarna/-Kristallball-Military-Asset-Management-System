@@ -15,4 +15,17 @@ api.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
+// Intercept 401/403 errors to clear stale/invalid sessions and redirect to login
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;
