@@ -11,15 +11,15 @@ export const Dashboard = () => {
   const [metrics, setMetrics] = useState(null);
   const [assets, setAssets] = useState([]);
   const [bases, setBases] = useState([]);
-  const [selectedBase, setSelectedBase] = useState(user.role === 'ADMIN' ? '' : user.baseId);
+  const [selectedBase, setSelectedBase] = useState(user?.role === 'ADMIN' ? '' : (user?.baseId || ''));
   const [showNetMoveModal, setShowNetMoveModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user.role === 'ADMIN') {
+    if (user?.role === 'ADMIN') {
       fetchBases();
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     fetchMetrics();
@@ -70,7 +70,7 @@ export const Dashboard = () => {
           <p className="text-gray-400 text-sm mt-1">Real-time status overview of military logistics.</p>
         </div>
 
-        {user.role === 'ADMIN' && (
+        {user?.role === 'ADMIN' && (
           <div className="flex items-center gap-2 bg-slate-900 px-4 py-2 rounded-xl border border-slate-800 w-full sm:w-auto">
             <Compass className="h-4 w-4 text-gray-400" />
             <select

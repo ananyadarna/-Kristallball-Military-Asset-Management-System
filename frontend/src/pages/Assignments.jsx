@@ -11,13 +11,13 @@ export const Assignments = () => {
   const [equipmentTypes, setEquipmentTypes] = useState([]);
 
   // Form states - Assignment
-  const [assignBase, setAssignBase] = useState(user.role === 'ADMIN' ? '' : user.baseId);
+  const [assignBase, setAssignBase] = useState(user?.role === 'ADMIN' ? '' : (user?.baseId || ''));
   const [assignEquipment, setAssignEquipment] = useState('');
   const [assignQty, setAssignQty] = useState('');
   const [assignTo, setAssignTo] = useState('');
   
   // Form states - Expenditure
-  const [expBase, setExpBase] = useState(user.role === 'ADMIN' ? '' : user.baseId);
+  const [expBase, setExpBase] = useState(user?.role === 'ADMIN' ? '' : (user?.baseId || ''));
   const [expEquipment, setExpEquipment] = useState('');
   const [expQty, setExpQty] = useState('');
   const [expReason, setExpReason] = useState('');
@@ -29,10 +29,10 @@ export const Assignments = () => {
     fetchAssignments();
     fetchExpenditures();
     fetchEquipmentTypes();
-    if (user.role === 'ADMIN') {
+    if (user?.role === 'ADMIN') {
       fetchBases();
     }
-  }, []);
+  }, [user]);
 
   const fetchAssignments = async () => {
     try {
@@ -143,7 +143,7 @@ export const Assignments = () => {
             )}
 
             <form onSubmit={handleAssignSubmit} className="space-y-4">
-              {user.role === 'ADMIN' ? (
+              {user?.role === 'ADMIN' ? (
                 <div>
                   <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Base</label>
                   <select
@@ -164,7 +164,7 @@ export const Assignments = () => {
                   <input
                     type="text"
                     readOnly
-                    value={`Base #${user.baseId}`}
+                    value={`Base #${user?.baseId || ''}`}
                     className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-2.5 px-4 text-gray-500 focus:outline-none"
                   />
                 </div>
@@ -272,7 +272,7 @@ export const Assignments = () => {
             )}
 
             <form onSubmit={handleExpSubmit} className="space-y-4">
-              {user.role === 'ADMIN' ? (
+              {user?.role === 'ADMIN' ? (
                 <div>
                   <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Base</label>
                   <select
@@ -293,7 +293,7 @@ export const Assignments = () => {
                   <input
                     type="text"
                     readOnly
-                    value={`Base #${user.baseId}`}
+                    value={`Base #${user?.baseId || ''}`}
                     className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-2.5 px-4 text-gray-500 focus:outline-none"
                   />
                 </div>

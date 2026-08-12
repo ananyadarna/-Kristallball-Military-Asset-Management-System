@@ -4,17 +4,16 @@ import api from '../services/api';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('user');
-    if (savedUser && token) {
-      setUser(JSON.parse(savedUser));
+    try {
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch (e) {
+      return null;
     }
-    setLoading(false);
-  }, [token]);
+  });
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [loading, setLoading] = useState(false); // Synchronous init means no initial load state needed
 
   const loginUser = async (username, password) => {
     const response = await api.post('/auth/login', { username, password });

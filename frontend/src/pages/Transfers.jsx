@@ -10,7 +10,7 @@ export const Transfers = () => {
   const [equipmentTypes, setEquipmentTypes] = useState([]);
 
   // Form states
-  const [sourceBase, setSourceBase] = useState(user.role === 'ADMIN' ? '' : user.baseId);
+  const [sourceBase, setSourceBase] = useState(user?.role === 'ADMIN' ? '' : (user?.baseId || ''));
   const [destBase, setDestBase] = useState('');
   const [selectedEquipment, setSelectedEquipment] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -104,7 +104,7 @@ export const Transfers = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {user.role === 'ADMIN' ? (
+            {user?.role === 'ADMIN' ? (
               <div>
                 <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Source Base</label>
                 <select
@@ -125,7 +125,7 @@ export const Transfers = () => {
                 <input
                   type="text"
                   readOnly
-                  value={`Base #${user.baseId}`}
+                  value={`Base #${user?.baseId || ''}`}
                   className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-2.5 px-4 text-gray-500 focus:outline-none"
                 />
               </div>

@@ -10,7 +10,7 @@ export const Purchases = () => {
   const [equipmentTypes, setEquipmentTypes] = useState([]);
   
   // Form states
-  const [selectedBase, setSelectedBase] = useState(user.role === 'ADMIN' ? '' : user.baseId);
+  const [selectedBase, setSelectedBase] = useState(user?.role === 'ADMIN' ? '' : (user?.baseId || ''));
   const [selectedEquipment, setSelectedEquipment] = useState('');
   const [quantity, setQuantity] = useState('');
   const [message, setMessage] = useState({ text: '', type: '' });
@@ -19,10 +19,10 @@ export const Purchases = () => {
   useEffect(() => {
     fetchPurchases();
     fetchEquipmentTypes();
-    if (user.role === 'ADMIN') {
+    if (user?.role === 'ADMIN') {
       fetchBases();
     }
-  }, []);
+  }, [user]);
 
   const fetchPurchases = async () => {
     try {
@@ -97,7 +97,7 @@ export const Purchases = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {user.role === 'ADMIN' ? (
+            {user?.role === 'ADMIN' ? (
               <div>
                 <label className="block text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Target Base</label>
                 <select
@@ -118,7 +118,7 @@ export const Purchases = () => {
                 <input
                   type="text"
                   readOnly
-                  value={`Base #${user.baseId}`}
+                  value={`Base #${user?.baseId || ''}`}
                   className="w-full bg-slate-950/50 border border-slate-800 rounded-xl py-2.5 px-4 text-gray-500 focus:outline-none"
                 />
               </div>
